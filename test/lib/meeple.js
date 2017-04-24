@@ -1,23 +1,24 @@
-var test = require('ava');
-var td = require('testdouble');
+/* eslint-disable no-underscore-dangle */
+const test = require('ava');
+const td = require('testdouble');
 
-var roll20 = td.replace('../../lib/helpers/roll20');
-var Meeple = require('../../lib/meeple');
+const roll20 = td.replace('../../lib/helpers/roll20');
+const Meeple = require('../../lib/meeple');
 
-test('#constructor should create a new Meeple', t => {
+test('#constructor should create a new Meeple', (t) => {
   td.when(roll20.getToken('good-meeple-name', { testOptions: true })).thenReturn({
-    _id: 'test-meeple-id'
+    _id: 'test-meeple-id',
   });
 
   const meeple = new Meeple('good-meeple-name', () => {}, { testOptions: true });
   t.is(meeple.internalToken._id, 'test-meeple-id');
 });
 
-test('#act should initialize a meeple\'s behavior', t => {
+test('#act should initialize a meeple\'s behavior', (t) => {
   const behavior = td.function();
-  
+
   td.when(roll20.getToken('meeple-name', undefined)).thenReturn({
-    _id: 'test-meeple-id'
+    _id: 'test-meeple-id',
   });
 
   const meeple = new Meeple('meeple-name', behavior);
