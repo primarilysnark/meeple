@@ -11,12 +11,18 @@
     "roll20"
   ],
   "scripts": {
+    "lint": "eslint ./lib/*.js ./lib/**/*.js",
     "test": "NODE_ENV=test ava"
   },
   "author": "PrimarilySnark",
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.19.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "testdouble": "^2.1.2"
   },
   "ava": {
