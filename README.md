@@ -10,7 +10,7 @@ Meeple is designed to help reduce the overhead for scripting behavior. As an exa
 import { Meeple, Scene } from 'meeple';
 
 // Define our guard meeple we want to use
-const guard = new Meeple('Guard A', () => {
+const guard = new Meeple('Guard A', function behavior() {
 
   // This function defines the guard's behavior. In this case
   // we want him to walk right for three steps and then walk
@@ -22,9 +22,9 @@ const guard = new Meeple('Guard A', () => {
   }
   
   if (this.walkingRight) {
-    this.token.move(0, 1);
+    this.move(0, 1);
   } else {
-    this.token.move(0, -1);
+    this.move(0, -1);
   }
   
   this.stepsTaken++;
