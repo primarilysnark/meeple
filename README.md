@@ -2,7 +2,7 @@
 
 Meeple is a JavaScript library for interacting with the [Roll20](https://roll20.net/) Scripting API, focused on token behavior. Using Meeple, you can create a scene and then script tokens to interact with the scene as meeples.
 
-# Example Usage
+## Example Usage
 Meeple is designed to help reduce the overhead for scripting behavior. As an example, let's look at the "Patrolling Token" example given in the [Advanced Examples](https://wiki.roll20.net/API:Advanced_Examples) documentation for the Roll20 Scripting API. In the example, you're writing a script to simulate a guard patrolling back and forth in a hallway. Here's how you could do it with Meeple.
 
 ```JavaScript
@@ -35,7 +35,7 @@ const guard = new Meeple('Guard A', () => {
 guard.stepsTaken = 0;
 guard.walkingRight = true;
 
-// Now that we have our meeples, we need a scene
+// Now that we have our guard, we need a scene
 const scene = new Scene([guard], {
   // We need to set how fast we want the scene to move
   clockSpeed: 5000,
