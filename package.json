@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "lint": "eslint ./lib/*.js ./lib/**/*.js",
-    "test": "NODE_ENV=test ava"
+    "test": "NODE_ENV=test ava",
+    "build": "BABEL_DISABLE_CACHE=1 node ./compiler/index.js"
   },
   "author": "PrimarilySnark",
   "license": "MIT",
