@@ -59,3 +59,6 @@ typings/
 
 # .DS_STOREs
 .DS_STORE
+
+# dist folder
+dist/
