@@ -1,12 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-const test = require('ava');
-const td = require('testdouble');
+import test from 'ava';
+import td from 'testdouble';
 
-const roll20 = td.replace('../../lib/helpers/roll20');
-const Meeple = require('../../lib/meeple');
+import Meeple from '../../lib/meeple';
+import roll20 from '../../lib/helpers/roll20';
+
+const getToken = td.replace(roll20, 'getToken');
 
 test('#constructor should create a new Meeple', (t) => {
-  td.when(roll20.getToken('good-meeple-name', { testOptions: true })).thenReturn({
+  td.when(getToken('good-meeple-name', { testOptions: true })).thenReturn({
     _id: 'test-meeple-id',
   });
 
@@ -17,7 +19,7 @@ test('#constructor should create a new Meeple', (t) => {
 test('#act should initialize a meeple\'s behavior', (t) => {
   const behavior = td.function();
 
-  td.when(roll20.getToken('meeple-name', undefined)).thenReturn({
+  td.when(getToken('meeple-name', undefined)).thenReturn({
     _id: 'test-meeple-id',
   });
 

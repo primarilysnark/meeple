@@ -1,14 +1,19 @@
 /* eslint-disable no-underscore-dangle */
-const test = require('ava');
-const td = require('testdouble');
+import test from 'ava';
+import td from 'testdouble';
 
-const api = td.replace('../../lib/helpers/api');
-const roll20 = td.replace('../../lib/helpers/roll20');
-const Token = require('../../lib/token');
+import Token from '../../lib/token';
+import api from '../../lib/helpers/api';
+import roll20 from '../../lib/helpers/roll20';
+
+const distanceToPixels = td.replace(api, 'distanceToPixels');
+const getToken = td.replace(roll20, 'getToken');
+const getTokenProperty = td.replace(api, 'getTokenProperty');
+const setTokenProperties = td.replace(api, 'setTokenProperties');
 
 let testToken;
 test.beforeEach(() => {
-  td.when(roll20.getToken('test-token-name', { testOptions: true })).thenReturn({
+  td.when(getToken('test-token-name', { testOptions: true })).thenReturn({
     _id: 'test-token-id',
   });
 
@@ -16,7 +21,7 @@ test.beforeEach(() => {
 });
 
 test('#constructor should create a new Token', (t) => {
-  td.when(roll20.getToken('good-token-name', { testOptions: true })).thenReturn({
+  td.when(getToken('good-token-name', { testOptions: true })).thenReturn({
     _id: 'test-token-id',
   });
 
@@ -25,7 +30,7 @@ test('#constructor should create a new Token', (t) => {
 });
 
 test('#constructor should throw if token is missing', (t) => {
-  td.when(roll20.getToken('missing-token-name', { testOptions: true })).thenReturn(null);
+  td.when(getToken('missing-token-name', { testOptions: true })).thenReturn(null);
 
   const error = t.throws(() => new Token('missing-token-name', { testOptions: true }), Error);
 
@@ -37,13 +42,13 @@ test('#getId should return the token\'s id', (t) => {
 });
 
 test('#move should move the id by the provided coordinates', (t) => {
-  td.when(api.getTokenProperty(testToken.internalToken, 'left')).thenReturn(0);
-  td.when(api.getTokenProperty(testToken.internalToken, 'top')).thenReturn(2);
-  td.when(api.distanceToPixels(5)).thenReturn(5);
+  td.when(getTokenProperty(testToken.internalToken, 'left')).thenReturn(0);
+  td.when(getTokenProperty(testToken.internalToken, 'top')).thenReturn(2);
+  td.when(distanceToPixels(5)).thenReturn(5);
 
   testToken.move(5, 5);
 
-  td.verify(api.setTokenProperties(testToken.internalToken, {
+  td.verify(setTokenProperties(testToken.internalToken, {
     left: 5,
     top: 7,
   }));
@@ -52,11 +57,11 @@ test('#move should move the id by the provided coordinates', (t) => {
 });
 
 test('#place should move the id to the provided coordinates', (t) => {
-  td.when(api.distanceToPixels(5)).thenReturn(5);
+  td.when(distanceToPixels(5)).thenReturn(5);
 
   testToken.place(5, 5);
 
-  td.verify(api.setTokenProperties(testToken.internalToken, {
+  td.verify(setTokenProperties(testToken.internalToken, {
     left: 5,
     top: 5,
   }));

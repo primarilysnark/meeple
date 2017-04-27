@@ -1,11 +1,13 @@
-const test = require('ava');
-const td = require('testdouble');
+import test from 'ava';
+import td from 'testdouble';
 
-const api = td.replace('../../lib/helpers/api');
-const roll20 = require('../../lib/helpers/roll20');
+import roll20 from '../../lib/helpers/roll20';
+import api from '../../lib/helpers/api';
+
+const findObjs = td.replace(api, 'findObjs');
 
 test('#getToken returns null for no matching token', (t) => {
-  td.when(api.findObjs({
+  td.when(findObjs({
     _type: 'graphic',
     _subtype: 'token',
     name: 'bad-token',
@@ -15,7 +17,7 @@ test('#getToken returns null for no matching token', (t) => {
 });
 
 test('#getToken throws if token is ambiguous', (t) => {
-  td.when(api.findObjs({
+  td.when(findObjs({
     _type: 'graphic',
     _subtype: 'token',
     name: 'ambiguous-token',
@@ -26,7 +28,7 @@ test('#getToken throws if token is ambiguous', (t) => {
 });
 
 test('#getToken returns the token if matching token found', (t) => {
-  td.when(api.findObjs({
+  td.when(findObjs({
     _type: 'graphic',
     _subtype: 'token',
     name: 'good-token',
@@ -39,7 +41,7 @@ test('#getToken returns the token if matching token found', (t) => {
 });
 
 test('#getToken returns the token with extra options specified', (t) => {
-  td.when(api.findObjs({
+  td.when(findObjs({
     _type: 'graphic',
     _subtype: 'token',
     name: 'good-token',
